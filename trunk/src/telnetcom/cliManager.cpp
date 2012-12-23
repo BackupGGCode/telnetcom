@@ -7,8 +7,8 @@
 
 void CommandsMgr::LoadCommands()
 {
-    ListCommands lista[MAX_COMMANDS] = {
-
+    ListCommands lista[MAX_COMMANDS] =
+    {
         {"config",          SEC_USER,      true,     &GetConfigOptionsHandler,     ""},
         {"shutdown",        SEC_ADMIN,     true,     &ShutdownCommandHandler,      ""},
         {"getip",           SEC_USER,      false,    &GetIpCommandHandler,         ""},
@@ -23,15 +23,14 @@ void CommandsMgr::LoadCommands()
         {"unlogin",         SEC_USER,      false,    &UnLoginClientHandler,        ""},
         {"commands",        SEC_USER,      true,     &ComandsListHandler,          ""},
         {"help",            SEC_USER,      true,     &ComandsListHandler,          ""},
-        {"END",             SEC_USER,      false,    NULL,                       "END"} // Fin del array, no modificar
-
+        {"END",             SEC_USER,      false,    NULL,                      "END"} // Fin del array, no modificar
     };
 
     for (int i = 0; lista[i].Name != "END"; ++i)
         MyComands_[i] = lista[i];
 }
 
-bool GetConfigOptionsHandler(chat_session_ptr _client, const char* args)
+bool GetConfigOptionsHandler(chat_session_ptr _client, char const* args)
 {
     CommandsMgr::PSendMessageBoth(_client, "Puerto 1 de tcp: %s", sServerGlobals->serverOptions.port1.c_str());
     CommandsMgr::PSendMessageBoth(_client, "Puerto 2 de tcp: %s", sServerGlobals->serverOptions.port2.c_str());
@@ -43,7 +42,7 @@ bool GetConfigOptionsHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool ShutdownCommandHandler(chat_session_ptr _client, const char* args)
+bool ShutdownCommandHandler(chat_session_ptr _client, char const* args)
 {
     if (sSerialPort->Set_ && sSerialPort->mSerialPort->active())
         sSerialPort->mSerialPort->close();
@@ -62,7 +61,7 @@ bool ShutdownCommandHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool GetIpCommandHandler(chat_session_ptr _client, const char* args)
+bool GetIpCommandHandler(chat_session_ptr _client, char const* args)
 {
     std::string s = "Tu IP es: " + _client->socket().remote_endpoint().address().to_string();
     _client->SendMessageClient(s);
@@ -70,7 +69,7 @@ bool GetIpCommandHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool GetClientList(chat_session_ptr _client, const char* args)
+bool GetClientList(chat_session_ptr _client, char const* args)
 {
     std::list<chat_session_ptr>::const_iterator itr = sServerGlobals->GetClientList().begin();
 
@@ -92,7 +91,7 @@ bool GetClientList(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool SendAllHandler(chat_session_ptr _client, const char* args)
+bool SendAllHandler(chat_session_ptr _client, char const* args)
 {
     if (!args)
         return false;
@@ -110,7 +109,7 @@ bool SendAllHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool SendHandler(chat_session_ptr _client, const char* args)
+bool SendHandler(chat_session_ptr _client, char const* args)
 {
     if (!args)
         return false;
@@ -155,7 +154,7 @@ bool SendHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool SendSerialHandler(chat_session_ptr _client, const char* args)
+bool SendSerialHandler(chat_session_ptr _client, char const* args)
 {
     if (!args)
         return false;
@@ -172,7 +171,7 @@ bool SendSerialHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool KickAllClientsHandler(chat_session_ptr _client, const char* args)
+bool KickAllClientsHandler(chat_session_ptr _client, char const* args)
 {
     uint32 count = 0;
     std::list<chat_session_ptr>::const_iterator itr = sServerGlobals->GetClientList().begin();
@@ -189,7 +188,7 @@ bool KickAllClientsHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool KickClientHandler(chat_session_ptr _client, const char* args)
+bool KickClientHandler(chat_session_ptr _client, char const* args)
 {
     if (!args)
         return false;
@@ -216,7 +215,7 @@ bool KickClientHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool timeServerHandler(chat_session_ptr _client, const char* args)
+bool timeServerHandler(chat_session_ptr _client, char const* args)
 {
     time_t start_time = sServerGlobals->startTime;
     time_t now_time = time(NULL);
@@ -233,7 +232,7 @@ bool timeServerHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool ComandsListHandler(chat_session_ptr _client, const char* args)
+bool ComandsListHandler(chat_session_ptr _client, char const* args)
 {
     ListCommands* commands_ = sCommandsMgr->GetCommandsList();
 
@@ -253,7 +252,7 @@ bool ComandsListHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool LoginClientHandler(chat_session_ptr _client, const char* args)
+bool LoginClientHandler(chat_session_ptr _client, char const* args)
 {
     // El !_client no deberia pasar JAMAS.
     if (!args || !_client)
@@ -278,7 +277,7 @@ bool LoginClientHandler(chat_session_ptr _client, const char* args)
     return true;
 }
 
-bool UnLoginClientHandler(chat_session_ptr _client, const char* args)
+bool UnLoginClientHandler(chat_session_ptr _client, char const* args)
 {
     // El !_client no deberia pasar JAMAS.
     if (!_client)
@@ -401,7 +400,7 @@ void CommandsMgr::RunCommand(chat_session_ptr _client, std::string command, bool
     free(tok);
 }
 
-bool CommandsMgr::SendMessageBoth(chat_session_ptr _client, const char* msg)
+bool CommandsMgr::SendMessageBoth(chat_session_ptr _client, char const* msg)
 {
     if (!_client)
     {
@@ -417,7 +416,7 @@ bool CommandsMgr::SendMessageBoth(chat_session_ptr _client, const char* msg)
     return true;
 }
 
-bool CommandsMgr::PSendMessageBoth(chat_session_ptr _client, const char* format, ...)
+bool CommandsMgr::PSendMessageBoth(chat_session_ptr _client, char const* format, ...)
 {
     char str [2048];
     va_list ap;
@@ -431,12 +430,12 @@ bool CommandsMgr::PSendMessageBoth(chat_session_ptr _client, const char* format,
     return true;
 }
 
-void CommandsMgr::SendMessageConsole(const char* msg)
+void CommandsMgr::SendMessageConsole(char const* msg)
 {
     std::cout << msg << std::endl;
 }
 
-void CommandsMgr::PSendMessageConsole(const char* format, ...)
+void CommandsMgr::PSendMessageConsole(char const* format, ...)
 {
     va_list ap;
     char str [2048];
@@ -451,10 +450,18 @@ std::string GetSecurityString(SecurityTypes sec)
     std::string sec_string =  std::string();
     switch (sec)
     {
-    case SEC_USER:      sec_string = "Usuario"; break;
-    case SEC_MODERATOR: sec_string = "Moderador"; break;
-    case SEC_ADMIN:     sec_string = "Administrador"; break;
-    default:            sec_string = "Desconocido"; break;
+    case SEC_USER:
+        sec_string = "Usuario";
+        break;
+    case SEC_MODERATOR:
+        sec_string = "Moderador";
+        break;
+    case SEC_ADMIN:
+        sec_string = "Administrador";
+        break;
+    default:
+        sec_string = "Desconocido";
+        break;
     }
 
     return sec_string;
