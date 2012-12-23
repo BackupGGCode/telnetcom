@@ -74,7 +74,7 @@ public:
 	void CheckConfigFile();
 	bool GetBoolDefault(const char* name);
 	int32 GetIntDefault(const char* name, int32 def);
-	float GetFloatDefault(const char* name, float def);
+	float32 GetFloatDefault(const char* name, float32 def);
 	std::string GetStringDefault(const char* name, std::string def);
 };
 
