@@ -51,7 +51,7 @@ class CommandsMgr
 public:
 	CommandsMgr()
 	{
-		for (int i = 0; i < MAX_COMMANDS; ++i)
+		for (int32 i = 0; i < MAX_COMMANDS; ++i)
 		{
 			MyComands_[i].Name = "NONE";
 			MyComands_[i].handler = NULL;;

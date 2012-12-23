@@ -5,7 +5,7 @@ void SetUpSerialSystem(boost::asio::io_service& io_service);
 class SerialPort
 {
 public:
-	SerialPort(boost::asio::io_service& io_service, unsigned int baud, const std::string& device) : active_(true), io_service_(io_service), serialPort(io_service, device)
+	SerialPort(boost::asio::io_service& io_service, uint32 baud, const std::string& device) : active_(true), io_service_(io_service), serialPort(io_service, device)
 	{
 		if (!serialPort.is_open())
 		{
@@ -37,7 +37,7 @@ public:
 
 private:
 
-	static const int max_read_length = 512; // maxima cantidad de datos a leer en una operacion
+	static const int32 max_read_length = 512; // maxima cantidad de datos a leer en una operacion
 
 	void read_start(void) ;
 	void read_complete(const boost::system::error_code& error, size_t bytes_transferred);

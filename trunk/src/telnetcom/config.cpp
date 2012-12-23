@@ -151,10 +151,10 @@ int32 ConfigFile::GetIntDefault(const char* name, int32 def)
 	return cfg.getValueOfKey<int32>(name, def);
 }
 
-float ConfigFile::GetFloatDefault(const char* name, float def)
+float32 ConfigFile::GetFloatDefault(const char* name, float32 def)
 {
 	ConfigFile cfg(CONFIG_FILE_NAME);
-	return cfg.getValueOfKey<float>(name, def);
+	return cfg.getValueOfKey<float32>(name, def);
 }
 
 std::string ConfigFile::GetStringDefault(const char* name, std::string def)

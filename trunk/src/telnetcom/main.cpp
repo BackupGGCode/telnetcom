@@ -28,7 +28,7 @@ void StartServer(boost::asio::io_service& io_service)
 
 		chat_server_list servers;
 		uint32 count = 0;
-		for (int i = 0; portsarray[i] != 0; ++i)
+		for (int32 i = 0; portsarray[i] != 0; ++i)
 		{
 			if (strcmp(portsarray[i], "none") == 0)
 				continue;
@@ -51,7 +51,7 @@ void StartServer(boost::asio::io_service& io_service)
 	}
 }
 
-int main()
+void main()
 {
 	LoadConfigs();
 
@@ -67,6 +67,4 @@ int main()
 
 	// No saldra de esta funcion hasta finalizar el programa. (bucle)
 	StartServer(io_service);
-
-	return 0;
 }

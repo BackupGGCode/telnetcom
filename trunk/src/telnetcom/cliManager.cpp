@@ -26,7 +26,7 @@ void CommandsMgr::LoadCommands()
         {"END",             SEC_USER,      false,    NULL,                      "END"} // Fin del array, no modificar
     };
 
-    for (int i = 0; lista[i].Name != "END"; ++i)
+    for (int32 i = 0; lista[i].Name != "END"; ++i)
         MyComands_[i] = lista[i];
 }
 
@@ -221,9 +221,9 @@ bool timeServerHandler(chat_session_ptr _client, char const* args)
     time_t now_time = time(NULL);
 
     uint32 segundos = uint32 (now_time - start_time);
-    float minutos = (float) segundos / 60;
-    float horas = (float) minutos / 60;
-    float dias = (float) horas / 24;
+    float32 minutos = (float32) segundos / 60;
+    float32 horas = (float32) minutos / 60;
+    float32 dias = (float32) horas / 24;
 
     CommandsMgr::PSendMessageBoth(_client, "TelnetCom inicio: %s", ctime(&start_time));
     CommandsMgr::PSendMessageBoth(_client, "El tiempo actual es: %s", ctime(&now_time));
@@ -238,7 +238,7 @@ bool ComandsListHandler(chat_session_ptr _client, char const* args)
 
     CommandsMgr::SendMessageBoth(_client, "Lista de comandos disponibles: ");
 
-    for (int i = 0; commands_[i].Name != "NONE"; ++i)
+    for (int32 i = 0; commands_[i].Name != "NONE"; ++i)
     {
         if (!_client && !commands_[i].AllowConsole)
             continue;
@@ -301,7 +301,7 @@ void cliRunnable::run()
         std::cin.getline(command_str, 500, '\n');
         if (command_str != NULL)
         {
-            for (int x=0; command_str[x]; ++x)
+            for (int32 x=0; command_str[x]; ++x)
                 if (command_str[x] == '\r' || command_str[x] == '\n')
                 {
                     command_str[x] = 0;
@@ -363,7 +363,7 @@ void CommandsMgr::RunCommand(chat_session_ptr _client, std::string command, bool
         arg_f = NULL;
 
 
-    for (int i = 0; i < MAX_COMMANDS; ++i)
+    for (int32 i = 0; i < MAX_COMMANDS; ++i)
     {
         if (command_str == MyComands_[i].Name)
         {
