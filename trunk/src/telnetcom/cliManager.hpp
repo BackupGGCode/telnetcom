@@ -27,44 +27,44 @@ std::string GetSecurityString(SecurityTypes sec);
 class cliRunnable
 {
 public:
-	void run();
+    void run();
 };
 class CommandsMgr;
 
 struct ListCommands
 {
-	std::string Name;
+    std::string Name;
     SecurityTypes sec;
-	bool AllowConsole;
-	bool (*handler)(chat_session_ptr, const char* args);
-	std::string Help;
+    bool AllowConsole;
+    bool (*handler)(chat_session_ptr, const char* args);
+    std::string Help;
 };
 
 struct CHandler
 {
-	chat_session_ptr client;
-	bool console;
+    chat_session_ptr client;
+    bool console;
 };
 
 class CommandsMgr
 {
 public:
-	CommandsMgr()
-	{
-		for (int32 i = 0; i < MAX_COMMANDS; ++i)
-		{
-			MyComands_[i].Name = "NONE";
-			MyComands_[i].handler = NULL;;
-			MyComands_[i].Help = "NONE";
-		}
+    CommandsMgr()
+    {
+        for (int32 i = 0; i < MAX_COMMANDS; ++i)
+        {
+            MyComands_[i].Name = "NONE";
+            MyComands_[i].handler = NULL;;
+            MyComands_[i].Help = "NONE";
+        }
 
-		LoadCommands();
+        LoadCommands();
 
-		InProsses = false;
-	}
+        InProsses = false;
+    }
 
-	void QueueCommand(chat_session_ptr _client, std::string command, bool console = false);
-	void RunCommand(chat_session_ptr _client, std::string command, bool console = false);
+    void QueueCommand(chat_session_ptr _client, std::string command, bool console = false);
+    void RunCommand(chat_session_ptr _client, std::string command, bool console = false);
 
     static bool SendMessageBoth(chat_session_ptr _client, const char* msg);
     static bool PSendMessageBoth(chat_session_ptr _client, const char* format, ...);
@@ -75,12 +75,12 @@ public:
 
 private:
 
-	void CommandQueueProssesor();
-	void LoadCommands();
+    void CommandQueueProssesor();
+    void LoadCommands();
 
-	ListCommands MyComands_[MAX_COMMANDS];
-	bool InProsses;
-	std::map<std::string, CHandler> commandQueue;
+    ListCommands MyComands_[MAX_COMMANDS];
+    bool InProsses;
+    std::map<std::string, CHandler> commandQueue;
 };
 
 #define sCommandsMgr CSingletonT<CommandsMgr>::Get()

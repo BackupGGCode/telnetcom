@@ -6,9 +6,9 @@ using boost::asio::ip::tcp;
 
 void chat_session::start()
 {
-	// Iniciamos un nuevo thread que este leyendo.
-	sServerGlobals->AddClient(shared_from_this());
-	boost::thread thread_session(boost::bind(&chat_session::ReadClientThread, shared_from_this()));
+    // Iniciamos un nuevo thread que este leyendo.
+    sServerGlobals->AddClient(shared_from_this());
+    boost::thread thread_session(boost::bind(&chat_session::ReadClientThread, shared_from_this()));
 }
 
 void chat_session::ReadClientThread()
@@ -64,23 +64,23 @@ void chat_session::ReadClientThread()
 
 void chat_server::start_accept()
 {
-	chat_session_ptr new_session(new chat_session(io_service_));
-	acceptor_.async_accept(new_session->socket(), boost::bind(&chat_server::handle_accept, this, new_session, boost::asio::placeholders::error));
+    chat_session_ptr new_session(new chat_session(io_service_));
+    acceptor_.async_accept(new_session->socket(), boost::bind(&chat_server::handle_accept, this, new_session, boost::asio::placeholders::error));
 }
 
 void chat_server::handle_accept(chat_session_ptr session, const boost::system::error_code& error)
 {
-	if (!error)
-		session->start();
+    if (!error)
+        session->start();
 
-	start_accept();
+    start_accept();
 }
 
 void UpdateAssynMessagesThread()
 {
-	while(true)
-	{
-		sServerGlobals->Update();
-		Sleep(100);
-	}
+    while(true)
+    {
+        sServerGlobals->Update();
+        Sleep(100);
+    }
 }
