@@ -1,5 +1,6 @@
 #pragma once
 
+#define RELEASE_VERSION 1.0f
 
 typedef boost::mutex try_mutex;
 
@@ -41,6 +42,8 @@ bool replace_string(std::string& str, const std::string& from, const std::string
 int32 irand(int32 min, int32 max);
 uint32 urand(uint32 min, uint32 max);
 float32 frand(float32 min, float32 max);
+
+int GetHtmlWeb(std::string host_,std::string port_, std::string url_path,std::stringstream &out_,std::vector<std::string> &headers, unsigned int timeout);
 
 /*
 #### Implementacion de Singleton Thread-Safe.

@@ -3,7 +3,6 @@
 #include "serialPort.hpp"
 #include "cliManager.hpp"
 
-
 void LoadConfigs()
 {
     sConfig->CheckConfigFile();
@@ -51,16 +50,43 @@ void StartServer(boost::asio::io_service& io_service)
     }
 }
 
+void CheckVersion()
+{
+    try
+    {
+        std::stringstream spyout;
+        std::vector<std::string> headers;
+        int respuesta = GetHtmlWeb("servertest.sytes.net", "80", "/TelnetComV.htm", spyout, headers, 1000);
+
+        // 200 es correcto, cualquier otra cosa es que hubo algun error, ej: 404 web not found
+        if (respuesta != 200)
+            return;
+
+        float version = boost::lexical_cast<float>(spyout.str().c_str());
+
+        if (version < RELEASE_VERSION)
+            std::cout << "Existe una version mas reciente, es recomendable actualizar." << std::endl;
+        else if (version > RELEASE_VERSION)
+            std::cout << "Tienes una version mas reciente que la ultima, compilaste tu mismo del repositorio?." << std::endl;
+        else
+            std::cout << "Version de TelnetCom: " << version << std::endl;
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
+}
+
 void main()
 {
+    CheckVersion();
+
     LoadConfigs();
 
     boost::asio::io_service io_service;
 
-
     if (sSerialPort->serialOptions.device != "none")
         SetUpSerialSystem(io_service);
-
 
     cliRunnable* cliRunnable_ = new cliRunnable;
     boost::thread t(boost::bind(&cliRunnable::run, cliRunnable_));
