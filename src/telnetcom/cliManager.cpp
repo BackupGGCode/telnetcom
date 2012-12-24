@@ -3,26 +3,24 @@
 #include "cliManager.hpp"
 #include "serialPort.hpp"
 
-// TODO: Comandos no case-sensitive.
-
 void CommandsMgr::LoadCommands()
 {
     ListCommands lista[MAX_COMMANDS] =
     {
+        {"commands",        SEC_USER,      true,     &ComandsListHandler,          ""},
         {"config",          SEC_USER,      true,     &GetConfigOptionsHandler,     ""},
-        {"shutdown",        SEC_ADMIN,     true,     &ShutdownCommandHandler,      ""},
         {"getip",           SEC_USER,      false,    &GetIpCommandHandler,         ""},
         {"getclientlist",   SEC_USER,      true,     &GetClientList,               ""},
-        {"sendall",         SEC_USER,      true,     &SendAllHandler,              "Sintaxis: sendall [mensaje]"},
-        {"send",            SEC_USER,      true,     &SendHandler,                 "Sintaxis: send [IP] [mensaje], cambie IP por Console, para un mensaje a la consola."},
-        {"sendserial",      SEC_USER,      true,     &SendSerialHandler,           "Sintaxis: sendserial [Dato], solo puede ser un caracter."},
-        {"kickall",         SEC_ADMIN,     true,     &KickAllClientsHandler,       ""},
-        {"kick",            SEC_MODERATOR, true,     &KickClientHandler,           "Sintaxis: kick [IP]"},
-        {"time",            SEC_USER,      true,     &timeServerHandler,           ""},
-        {"login",           SEC_USER,      false,    &LoginClientHandler,          "Sintaxis: login [contraseña]"},
-        {"unlogin",         SEC_USER,      false,    &UnLoginClientHandler,        ""},
-        {"commands",        SEC_USER,      true,     &ComandsListHandler,          ""},
         {"help",            SEC_USER,      true,     &ComandsListHandler,          ""},
+        {"kick",            SEC_MODERATOR, true,     &KickClientHandler,           "Sintaxis: kick [IP]"},
+        {"kickall",         SEC_ADMIN,     true,     &KickAllClientsHandler,       ""},
+        {"login",           SEC_USER,      false,    &LoginClientHandler,          "Sintaxis: login [contraseña]"},
+        {"send",            SEC_USER,      true,     &SendHandler,                 "Sintaxis: send [IP] [mensaje], cambie IP por Console, para un mensaje a la consola."},
+        {"sendall",         SEC_USER,      true,     &SendAllHandler,              "Sintaxis: sendall [mensaje]"},
+        {"sendserial",      SEC_USER,      true,     &SendSerialHandler,           "Sintaxis: sendserial [Dato], solo puede ser un caracter."},
+        {"shutdown",        SEC_ADMIN,     true,     &ShutdownCommandHandler,      ""},
+        {"time",            SEC_USER,      true,     &timeServerHandler,           ""},
+        {"unlogin",         SEC_USER,      false,    &UnLoginClientHandler,        ""},
         {"END",             SEC_USER,      false,    NULL,                      "END"} // Fin del array, no modificar
     };
 
