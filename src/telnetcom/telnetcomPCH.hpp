@@ -18,6 +18,9 @@
 #include <boost/lexical_cast.hpp> 
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp> 
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/uniform_real.hpp>
 
 #include "util.hpp"
 #include "config.hpp"

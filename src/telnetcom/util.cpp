@@ -22,3 +22,22 @@ bool replace_string(std::string& str, const std::string& from, const std::string
     str.replace(start_pos, from.length(), to);
     return true;
 }
+
+boost::random::mt19937 rng;
+int32 irand(int32 min, int32 max)
+{
+    boost::random::uniform_int_distribution<int32> r(min, max);
+    return (int32) r(rng);
+}
+
+uint32 urand(uint32 min, uint32 max)
+{
+    boost::random::uniform_int_distribution<uint32> r(min, max);
+    return (uint32) r(rng);
+}
+
+float32 frand(float32 min, float32 max)
+{
+    boost::random::uniform_real_distribution<float> r(min, max);
+    return (float32) r(rng);
+}

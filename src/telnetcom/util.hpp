@@ -38,6 +38,10 @@ void delay(int32 secs);
 void wait (int32 ms);
 bool replace_string(std::string& str, const std::string& from, const std::string& to);
 
+int32 irand(int32 min, int32 max);
+uint32 urand(uint32 min, uint32 max);
+float32 frand(float32 min, float32 max);
+
 /*
 #### Implementacion de Singleton Thread-Safe.
 */
