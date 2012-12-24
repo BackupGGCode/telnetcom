@@ -365,7 +365,7 @@ void CommandsMgr::RunCommand(chat_session_ptr _client, std::string command, bool
 
     for (int32 i = 0; i < MAX_COMMANDS; ++i)
     {
-        if (command_str == MyComands_[i].Name)
+        if (boost::iequals(command_str, MyComands_[i].Name))
         {
             if (!MyComands_[i].AllowConsole && console)
             {
