@@ -11,6 +11,7 @@ public:
     {
         memset(buffer_, 0, sizeof (buffer_));
         sec_level = SEC_USER;
+        ReadSerialData = false;
     }
 
     boost::asio::ip::tcp::socket& socket()
@@ -23,7 +24,7 @@ public:
         if (!socket_.is_open())
             return false;
 
-        _message += "\n\rTC> ";
+        _message += NLINE;
 
         boost::system::error_code error;
         socket_.write_some(boost::asio::buffer(_message), error);
@@ -37,6 +38,7 @@ public:
     void start();
     void ReadClientThread();
 
+    bool ReadSerialData;
 
     SecurityTypes GetSecurity() { return sec_level; };
     SecurityTypes sec_level;
@@ -46,6 +48,7 @@ public:
 private:
     boost::asio::ip::tcp::socket socket_;
     char buffer_[100];
+
 };
 
 typedef boost::shared_ptr<chat_session> chat_session_ptr;
@@ -99,7 +102,7 @@ public:
     {
         boost::system::error_code error;
         AcquireLock();
-        _message += "\n\rTC> ";
+        _message += NLINE;
         std::cout << _message;
         for (std::list<chat_session_ptr>::iterator iter = _ClientList.begin(); iter != _ClientList.end(); ++iter)
         {
@@ -110,7 +113,7 @@ public:
 
     void AssynSendMessageAllClients(std::string _message)
     {
-        _message += "\n\rTC> ";
+        _message += NLINE;
         std::cout << _message;
         boost::thread thread_message(boost::bind(&ServerGlobals::FinalAddAMessage, this, _message));
     }

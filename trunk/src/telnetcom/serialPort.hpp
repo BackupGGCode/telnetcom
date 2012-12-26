@@ -41,6 +41,7 @@ private:
 
     void read_start(void) ;
     void read_complete(const boost::system::error_code& error, size_t bytes_transferred);
+    void SendReadToClients(std::string _message);
 
     void do_write(const char msg);
     void write_start(void);

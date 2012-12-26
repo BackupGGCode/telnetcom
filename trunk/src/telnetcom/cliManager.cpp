@@ -15,6 +15,7 @@ void CommandsMgr::LoadCommands()
         {"kick",            SEC_MODERATOR, true,     &KickClientHandler,           "Sintaxis: kick [IP]"},
         {"kickall",         SEC_ADMIN,     true,     &KickAllClientsHandler,       ""},
         {"login",           SEC_USER,      false,    &LoginClientHandler,          "Sintaxis: login [contraseña]"},
+        {"readserial",      SEC_USER,      false,    &ToggleReadSerialHandler,     ""},
         {"send",            SEC_USER,      true,     &SendHandler,                 "Sintaxis: send [IP] [mensaje], cambie IP por Console, para un mensaje a la consola."},
         {"sendall",         SEC_USER,      true,     &SendAllHandler,              "Sintaxis: sendall [mensaje]"},
         {"sendserial",      SEC_USER,      true,     &SendSerialHandler,           "Sintaxis: sendserial [Dato], solo puede ser un caracter."},
@@ -33,7 +34,7 @@ bool GetConfigOptionsHandler(chat_session_ptr _client, char const* args)
     CommandsMgr::PSendMessageBoth(_client, "Puerto 1 de tcp: %s", sServerGlobals->serverOptions.port1.c_str());
     CommandsMgr::PSendMessageBoth(_client, "Puerto 2 de tcp: %s", sServerGlobals->serverOptions.port2.c_str());
     CommandsMgr::PSendMessageBoth(_client, "Puerto 3 de tcp: %s", sServerGlobals->serverOptions.port3.c_str());
-    CommandsMgr::PSendMessageBoth(_client, "\n");
+    CommandsMgr::PSendMessageBoth(_client, "");
     CommandsMgr::PSendMessageBoth(_client, "Puerto serial: %s", sSerialPort->serialOptions.device.c_str());
     CommandsMgr::PSendMessageBoth(_client, "Velocidad del puerto serial: %u", sSerialPort->serialOptions.baudrate);
 
@@ -284,6 +285,25 @@ bool UnLoginClientHandler(chat_session_ptr _client, char const* args)
     _client->sec_level = SEC_USER;
 
     CommandsMgr::SendMessageBoth(_client, "Se ha deslogeado con exito.");
+    return true;
+}
+
+bool ToggleReadSerialHandler(chat_session_ptr _client, char const* args)
+{
+    if (!_client)
+        return false;
+
+    if (_client->ReadSerialData)
+    {
+        _client->ReadSerialData = false;
+        CommandsMgr::SendMessageBoth(_client, "Ahora podra leer las respuestas en el puerto serial.");
+    }
+    else
+    {
+        _client->ReadSerialData = true;
+        CommandsMgr::SendMessageBoth(_client, "Ya no leera las respuestas en el puerto serial.");
+    }
+
     return true;
 }
 

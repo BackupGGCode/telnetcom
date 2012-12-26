@@ -18,6 +18,7 @@ bool timeServerHandler(chat_session_ptr _client, const char* args);
 bool ComandsListHandler(chat_session_ptr _client, const char* args);
 bool LoginClientHandler(chat_session_ptr _client, const char* args);
 bool UnLoginClientHandler(chat_session_ptr _client, const char* args);
+bool ToggleReadSerialHandler(chat_session_ptr _client, char const* args);
 
 // Declaracion de utilidades.
 std::string GetSecurityString(SecurityTypes sec);

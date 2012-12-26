@@ -26,7 +26,7 @@ typedef unsigned long long uint64;
 typedef float float32;
 typedef double float64;
 
-#define NLINE "\n\r"
+#define NLINE "\n\rTC> "
 
 enum SecurityTypes
 {
