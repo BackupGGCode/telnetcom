@@ -20,13 +20,26 @@ void SerialPort::read_complete(const boost::system::error_code& error, size_t by
         // Los mensajes los mandamos a todos, consola incluida.
         std::string notifier_ = std::string("Read Serial: ");
         notifier_ += read_msg_;
-        notifier_ += "\n\r";
-        sServerGlobals->AssynSendMessageAllClients(notifier_);
+        SendReadToClients(notifier_);
 
         read_start(); // Inicia la espera para otra lectura asyncrona otra vez
     }
     else
         do_close(error);
+}
+
+void SerialPort::SendReadToClients(std::string _message)
+{
+    boost::system::error_code error;
+    sServerGlobals->AcquireLock();
+    _message += NLINE;
+    std::cout << _message;
+    for (std::list<chat_session_ptr>::const_iterator iter = sServerGlobals->GetClientList().begin(); iter != sServerGlobals->GetClientList().end(); ++iter)
+    {
+        if ((*iter) && (*iter)->ReadSerialData)
+            (*iter)->socket().write_some(boost::asio::buffer(_message), error);
+    }
+    sServerGlobals->ReleaseLock();
 }
 
 void SerialPort::do_write(const char msg)
